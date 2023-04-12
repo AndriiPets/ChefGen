@@ -25,9 +25,9 @@ function Navbar() {
         </button>
       </div>
       {/* Logo */}
-      <div className="flex-1 ml-2">
+      <div className="flex-1">
         <img className="w-14 h-14" src={Chef} alt="" />
-        <a className=" normal-case text-xl font-bold">chefGen</a>
+        <a className=" normal-case text-xl font-bold"></a>
       </div>
       {/* Theme picker */}
       <label className="swap swap-rotate">
