@@ -9,8 +9,6 @@ import {
   Routes,
 } from "react-router-dom";
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
-import Menu from "./components/Menu";
 import Chef from "./media/chef.jpg";
 
 function App() {
