@@ -3,6 +3,9 @@ import serverURL from "../utils/ServerURL";
 import axios from "axios";
 import { Recepie } from "../utils/Types";
 import RecepieLine from "../components/RecepieLine";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export interface Home {}
 
@@ -12,11 +15,17 @@ function Home() {
   const [recepie, setRecepie] = useState<Recepie>();
   const [loading, setLoading] = useState(false);
 
+  const { lang } = useSelector((langState: RootState) => langState.langState);
+
+  const { t, i18n } = useTranslation("common");
+  const placeholder = t("placeholder");
+
   const fetchRecepie = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       const res = await axios.post(`${serverURL}/generate`, {
         prompt: prompt,
+        lang: lang,
       });
       setRecepie(res.data);
       setRecepieLoaded(!recepieLoaded);
@@ -31,7 +40,7 @@ function Home() {
   }, [recepieLoaded]);
 
   return (
-    <div className="bg-gradient-to-t from-indigo-300">
+    <div className="bg-gradient-to-t from-indigo-400">
       {recepieLoaded ? (
         <div className="flex mx-auto flex-col mt-5 mb-5 max-w-sm md:max-w-lg">
           <div className="flex flex-col-reverse gap-5 md:flex-row justify-between items-center">
@@ -47,7 +56,9 @@ function Home() {
           </div>
           <div className="divider"></div>
           <div className="flex flex-col gap-6">
-            <h1 className="text-gray-500 text-3xl font-bold">INGREDIENTS</h1>
+            <h1 className="text-gray-500 text-3xl font-bold">
+              {t("recepie.ingridients")}
+            </h1>
             <div className="w-full bg-white rounded-lg shadow">
               <p className="flex flex-col gap-1 ml-2 mt-2 mr-2 mb-2 font-serif italic text-left">
                 {recepie?.ingredients.map((dir, i) => (
@@ -58,7 +69,9 @@ function Home() {
           </div>
           <div className="divider"></div>
           <div className="flex flex-col gap-6">
-            <h1 className="text-gray-500 text-3xl font-bold">DIRECTIONS</h1>
+            <h1 className="text-gray-500 text-3xl font-bold">
+              {t("recepie.directions")}
+            </h1>
             <div className="w-full bg-white rounded-lg shadow">
               <div className="flex flex-col ml-2 mt-2 mr-2 mb-2 font-serif italic text-left gap-1">
                 {recepie?.directions.map((dir, i) => (
@@ -69,7 +82,9 @@ function Home() {
           </div>
           <div className="divider"></div>
           <div className="flex justify-between items-center">
-            <button className="btn btn-accent shadow">Save</button>
+            <button className="btn btn-accent shadow">
+              {t("recepie.save")}
+            </button>
             <button
               className="btn btn-primary shadow"
               onClick={(e) => {
@@ -78,21 +93,19 @@ function Home() {
                 setLoading(!loading);
               }}
             >
-              Generate again
+              {t("recepie.generate")}
             </button>
           </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center fixed left-0 top-0 bottom-0 right-0 bg-gradient-to-t from-indigo-300">
           {!loading && (
-            <h1 className="font-bold text-gray-500 mb-3">
-              Write ingridients you have in mind
-            </h1>
+            <h1 className="font-bold text-gray-500 mb-3">{t("title")}</h1>
           )}
           <div className="flex flex-col md:flex-row">
             <input
               type="text"
-              placeholder="Separate by commas"
+              placeholder={placeholder}
               className="input input-bordered w-full max-w-lg"
               onChange={(e) => setPrompt(e.target.value)}
             />
@@ -105,15 +118,13 @@ function Home() {
                   fetchRecepie(e);
                 }}
               >
-                Generate
+                {t("create_button")}
               </button>
             )}
           </div>
           {loading && (
             <div className="flex flex-col gap-5 justify-center mt-3">
-              <h1 className="font-bold text-gray-500 mb-3">
-                AI chef generating a recepie for you...
-              </h1>
+              <h1 className="font-bold text-gray-500 mb-3">{t("loading")}</h1>
               <progress className="progress w-full"></progress>
             </div>
           )}

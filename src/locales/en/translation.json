@@ -1,0 +1,12 @@
+{
+    "title":"Write ingridients you have in mind",
+    "placeholder":"Separate by commas",
+    "create_button":"Generate",
+    "loading":"AI chef generating a recepie for you...",
+    "recepie":{
+        "ingridients":"INGREDIENTS",
+        "directions":"DIRECTIONS",
+        "save":"Save",
+        "generate":"Generate again"
+    }
+}
