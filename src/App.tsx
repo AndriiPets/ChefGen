@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Chef from "./media/chef.jpg";
+import LangPicker from "./components/LangPicker";
+import Hamburger from "@mui/icons-material/MenuRounded";
 
 function App() {
   return (
@@ -25,11 +27,10 @@ function App() {
                   htmlFor="my-drawer-3"
                   className="btn btn-square btn-ghost"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                  <Hamburger
                     fill="none"
                     viewBox="0 0 24 24"
-                    className="inline-block w-5 h-5 stroke-current"
+                    className="inline-block w-5 h-5 stroke-current scale-125"
                   >
                     <path
                       strokeLinecap="round"
@@ -37,7 +38,7 @@ function App() {
                       strokeWidth="2"
                       d="M4 6h16M4 12h16M4 18h16"
                     ></path>
-                  </svg>
+                  </Hamburger>
                 </label>
               </div>
               {/* Logo */}
@@ -45,8 +46,10 @@ function App() {
                 <img className="w-14 h-14" src={Chef} alt="" />
                 <a className=" normal-case text-xl font-bold">chefGen</a>
               </div>
+
+              <LangPicker />
               {/* Theme picker */}
-              <label className="swap swap-rotate">
+              <label className="swap swap-rotate btn btn-square btn-ghost">
                 <input type="checkbox" />
 
                 <svg
