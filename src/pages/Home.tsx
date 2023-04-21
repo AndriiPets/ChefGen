@@ -23,8 +23,8 @@ function Home() {
   const fetchRecepie = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${serverURL}/generate`, {
-        prompt: prompt,
+      const res = await axios.post(`${serverURL}/generate/`, {
+        prompts: prompt,
         lang: lang,
       });
       setRecepie(res.data);

@@ -1,3 +1,3 @@
-const server = "http://localhost:5000";
+const server = "https://andriipets-chefgen.hf.space";
 
 export default server;
