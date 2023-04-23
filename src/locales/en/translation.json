@@ -8,5 +8,9 @@
         "directions":"DIRECTIONS",
         "save":"Save",
         "generate":"Generate again"
+    },
+    "error":{
+        "oops":"Oops something went wrong!",
+        "try_again":"Try again"
     }
 }

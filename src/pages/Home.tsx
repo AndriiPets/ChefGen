@@ -6,6 +6,7 @@ import RecepieLine from "../components/RecepieLine";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { useErrorBoundary } from "react-error-boundary";
 
 export interface Home {}
 
@@ -14,6 +15,8 @@ function Home() {
   const [prompt, setPrompt] = useState("");
   const [recepie, setRecepie] = useState<Recepie>();
   const [loading, setLoading] = useState(false);
+
+  const { showBoundary } = useErrorBoundary();
 
   const { lang } = useSelector((langState: RootState) => langState.langState);
 
@@ -32,12 +35,17 @@ function Home() {
       setLoading(!loading);
     } catch (err) {
       console.log(err);
+      showBoundary(err);
     }
   };
 
   useEffect(() => {
     console.log(recepie?.directions);
   }, [recepieLoaded]);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, []);
 
   return (
     <div className="bg-gradient-to-t from-indigo-400">
