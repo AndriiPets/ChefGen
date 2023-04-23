@@ -1,5 +1,6 @@
 import React from "react";
 import Chef from "../media/chef.jpg";
+import CatNormal from "../media/cat_normal.png";
 
 export interface Navbar {}
 
@@ -26,7 +27,7 @@ function Navbar() {
       </div>
       {/* Logo */}
       <div className="flex-1">
-        <img className="w-14 h-14" src={Chef} alt="" />
+        <img className="w-14 h-14" src={CatNormal} alt="" />
         <a className=" normal-case text-xl font-bold"></a>
       </div>
       {/* Theme picker */}
