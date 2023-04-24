@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import langReducer from "./langSlice";
+import chefReducer from "./chefSlice";
 
 const persistConfig = {
   key: "root",
@@ -21,6 +22,7 @@ const persistConfig = {
 
 const rootApp = combineReducers({
   langState: langReducer,
+  chefState: chefReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
