@@ -5,8 +5,12 @@ import { Recepie } from "../utils/Types";
 import RecepieLine from "../components/RecepieLine";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { useErrorBoundary } from "react-error-boundary";
+import { changeChef } from "../redux/chefSlice";
+import chef_top from "../media/chef_top.png";
+import chef_beam from "../media/chef_beam.png";
 
 export interface Home {}
 
@@ -18,7 +22,10 @@ function Home() {
 
   const { showBoundary } = useErrorBoundary();
 
+  const dispatch = useDispatch();
+
   const { lang } = useSelector((langState: RootState) => langState.langState);
+  const { chef } = useSelector((chefState: RootState) => chefState.chefState);
 
   const { t, i18n } = useTranslation("common");
   const placeholder = t("placeholder");
@@ -29,6 +36,7 @@ function Home() {
       const res = await axios.post(`${serverURL}/generate/`, {
         prompts: prompt,
         lang: lang,
+        chef: chef,
       });
       setRecepie(res.data);
       setRecepieLoaded(!recepieLoaded);
@@ -40,8 +48,8 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(recepie?.directions);
-  }, [recepieLoaded]);
+    console.log(chef);
+  }, [chef]);
 
   useEffect(() => {
     i18n.changeLanguage(lang);
@@ -50,7 +58,7 @@ function Home() {
   return (
     <div className="bg-gradient-to-t from-indigo-400">
       {recepieLoaded ? (
-        <div className="flex mx-auto flex-col mt-5 mb-5 max-w-sm md:max-w-lg">
+        <div className="flex mx-auto flex-col mt-5 mb-5 max-w-sm md:max-w-lg ">
           <div className="flex flex-col-reverse gap-5 md:flex-row justify-between items-center">
             <div className="bg-gray-500 w-72 h-48 rounded-lg">
               <img
@@ -68,11 +76,11 @@ function Home() {
               {t("recepie.ingridients")}
             </h1>
             <div className="w-full bg-white rounded-lg shadow">
-              <p className="flex flex-col gap-1 ml-2 mt-2 mr-2 mb-2 font-serif italic text-left">
+              <div className="flex flex-col gap-1 ml-2 mt-2 mr-2 mb-2 font-serif italic text-left">
                 {recepie?.ingredients.map((dir, i) => (
                   <RecepieLine recepie={dir} index={i} type="ingredients" />
                 ))}
-              </p>
+              </div>
             </div>
           </div>
           <div className="divider"></div>
@@ -89,6 +97,38 @@ function Home() {
             </div>
           </div>
           <div className="divider"></div>
+          <div className="flex gap-4 justify-center mb-6">
+            <h3 className="font-bold text-gray-700">{t("rate")}</h3>
+            <div className="rating gap-1">
+              <input type="radio" name="rating-9" className="rating-hidden" />
+              <input
+                type="radio"
+                name="rating-9"
+                className="mask mask-star-2"
+                checked
+              />
+              <input
+                type="radio"
+                name="rating-9"
+                className="mask mask-star-2"
+              />
+              <input
+                type="radio"
+                name="rating-9"
+                className="mask mask-star-2"
+              />
+              <input
+                type="radio"
+                name="rating-9"
+                className="mask mask-star-2"
+              />
+              <input
+                type="radio"
+                name="rating-9"
+                className="mask mask-star-2"
+              />
+            </div>
+          </div>
           <div className="flex justify-between items-center">
             <button className="btn btn-accent shadow">
               {t("recepie.save")}
@@ -108,18 +148,55 @@ function Home() {
       ) : (
         <div className="flex flex-col items-center justify-center fixed left-0 top-0 bottom-0 right-0 bg-gradient-to-t from-indigo-300">
           {!loading && (
-            <h1 className="font-bold text-gray-500 mb-3">{t("title")}</h1>
+            <div className="flex flex-col justify-center">
+              <h1 className="font-bold text-xl text-gray-500 mb-3">
+                {t("chefs.choose")}
+              </h1>
+              {/* chefs select */}
+              <div className="flex justify-between w-72 mb-12 mx-auto">
+                <div className="flex flex-col hover:bg-slate-400 rounded-lg cursor-pointer">
+                  <button
+                    className={
+                      chef === "top"
+                        ? "bg-primary rounded-lg text-white"
+                        : "text-gray-500"
+                    }
+                    onClick={() => dispatch(changeChef("top"))}
+                  >
+                    <img className="w-20 h-20 mx-3" src={chef_top} />
+                    <h3 className="font-bold  mb-3">{t("chefs.chef_1")}</h3>
+                  </button>
+                </div>
+                <div className="flex flex-col hover:bg-slate-400 rounded-lg cursor-pointer">
+                  <button
+                    className={
+                      chef === "beam"
+                        ? "bg-primary rounded-lg text-white"
+                        : "text-gray-500"
+                    }
+                    onClick={() => dispatch(changeChef("beam"))}
+                  >
+                    <img className="w-20 h-20 mx-3" src={chef_beam} />
+                    <h3 className="font-bold  mb-3">{t("chefs.chef_2")}</h3>
+                  </button>
+                </div>
+              </div>
+
+              <h1 className="font-bold text-xl text-gray-500 break-all break-normal mb-3 mx-6">
+                {t("title")}
+              </h1>
+            </div>
           )}
           <div className="flex flex-col md:flex-row">
             <input
               type="text"
               placeholder={placeholder}
-              className="input input-bordered w-full max-w-lg"
+              className="input input-bordered w-72 md:rounded-r-none"
               onChange={(e) => setPrompt(e.target.value)}
             />
             {!loading && (
               <button
-                className="btn btn-active btn-primary"
+                className="btn btn-active btn-primary md:rounded-l-none"
                 type="submit"
                 onClick={(e) => {
                   setLoading(!loading);

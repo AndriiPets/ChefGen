@@ -12,5 +12,11 @@
     "error":{
         "oops":"Oops something went wrong!",
         "try_again":"Try again"
+    },
+    "rate":"Rate this recepie:",
+    "chefs":{
+        "choose":"Choose your chef!",
+        "chef_1":"Chef Meow",
+        "chef_2":"Chef Boop"
     }
 }
