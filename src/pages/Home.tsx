@@ -48,10 +48,6 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(chef);
-  }, [chef]);
-
-  useEffect(() => {
     i18n.changeLanguage(lang);
   }, []);
 
